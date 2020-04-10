@@ -6,18 +6,12 @@ var budgetController = (function() {
         return x+a;
         }
     
-    var tmp = function()
-    {
-        console.log()
-    }
+ 
     return {
         publicTest: function(b){
-        console.log(add(b)); },
+        return add(b); }
         
-        test: function(){
-            
-            console.log(x)
-        }
+        
     }
 })();
 
@@ -32,6 +26,15 @@ var UIController = (function() {
 
 var controller = (function(bdgtCTRL,UICtrl) {
     
+    var x = bdgtCTRL.publicTest(5)
+    
+    return {
+        publicTest2: function()
+        {
+            console.log(x)
+        }
+    }
+    
     document.querySelector('.add__btn').addEventListener('click',function(){
 //do something
     });
@@ -44,4 +47,5 @@ var controller = (function(bdgtCTRL,UICtrl) {
     
 })(budgetController,UIController);
 
+console.log(controller.publicTest2())
 
