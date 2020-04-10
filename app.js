@@ -26,7 +26,7 @@ var controller = (function(bdgtCTRL,UICtrl) {
         //3. add new titem to UI
         
         //4. calc budget
-        
+        // on git read-input
         //5. display budget on the UI
     }
     document.querySelector('.add__btn').addEventListener('click',ctrlAddItem)
