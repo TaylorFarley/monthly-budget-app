@@ -1,51 +1,48 @@
 
 var budgetController = (function() {
     
-   var x=23
-    var add = function(a){
-        return x+a;
-        }
+//some code 
     
- 
-    return {
-        publicTest: function(b){
-        return add(b); }
-        
-        
-    }
 })();
 
 
 var UIController = (function() {
-    
+ 
     //some code
-    // adding some more code to
+    
 })();
 
 
-
+//GLOBAL APP CONTROLLER
 var controller = (function(bdgtCTRL,UICtrl) {
-    
-    var x = bdgtCTRL.publicTest(5)
-    
-    return {
-        publicTest2: function()
-        {
-            console.log(x)
-        }
+  
+    var ctrlAddItem = function()
+    {
+        console.log('it works')
+         //1. get the field input data
+        
+        //2. add item to budget controller
+        
+        //3. add new titem to UI
+        
+        //4. calc budget
+        
+        //5. display budget on the UI
     }
-    
-    document.querySelector('.add__btn').addEventListener('click',function(){
-//do something
-    });
+    document.querySelector('.add__btn').addEventListener('click',ctrlAddItem)
     
     
-    document.addEventListener('keypress',function(e){
-        console.log(e.key)
+    
+    document.addEventListener('keypress', function(e) {
+        if(e.keyCode===1 || event.which==13)
+        ctrlAddItem();
+            
+     
     })
+    
     
     
 })(budgetController,UIController);
 
-console.log(controller.publicTest2())
+
 
