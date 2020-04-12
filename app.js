@@ -39,7 +39,19 @@ return {
 //GLOBAL APP CONTROLLER
 var controller = (function(bdgtCTRL,UICtrl) {
   
-    var DOM = UICtrl.getDomStrings();
+    var setUpEventListeners = function()
+    {
+      var DOM = UICtrl.getDomStrings();
+    document.querySelector(DOM.inputBtn).addEventListener('click',ctrlAddItem)   
+    
+    
+    document.addEventListener('keypress', function(e) {
+        if(e.keyCode===1 || event.which==13)
+        ctrlAddItem();
+            
+     
+    })}
+ 
     
     var ctrlAddItem = function()
     {
@@ -54,21 +66,18 @@ var controller = (function(bdgtCTRL,UICtrl) {
         //4. calc budget
         // on git read-input
         //5. display budget on the UI
+    };
+
+    return {
+        init: function()
+        {
+            console.log('Application running')
+            setUpEventListeners();
+        }
     }
-    document.querySelector(DOM.inputBtn).addEventListener('click',ctrlAddItem)
-    
-    
-    
-    document.addEventListener('keypress', function(e) {
-        if(e.keyCode===1 || event.which==13)
-        ctrlAddItem();
-            
-     
-    })
-    
     
     
 })(budgetController,UIController);
 
 
-
+controller.init();
