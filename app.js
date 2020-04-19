@@ -27,7 +27,26 @@ var Income = function(id, description, value)
             inc:0
         }
        
-    }
+    };
+    
+    return {
+        additem: function(type, des, val)
+        {
+            var newItem, ID;
+            ID = 0;
+            
+            if (type==='exp'){
+            newItem = new Expense(ID, des, val);
+            }
+            else if(type === 'inc')
+                {
+            newItem = new Income(ID,des,val)
+                }
+            data.allItems[type].push(newItem)
+            return newItem
+        }
+        
+    };
 
     
 })();
