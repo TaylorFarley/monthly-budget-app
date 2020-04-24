@@ -81,7 +81,7 @@ var UIController = (function () {
             return {
                 type: document.querySelector(DOMStrings.inputType).value,
                 description: document.querySelector(DOMStrings.inputDescription).value,
-                value: document.querySelector(DOMStrings.inputValue).value
+                value: parseFloat(document.querySelector(DOMStrings.inputValue).value)
             };
         },
 
@@ -141,7 +141,13 @@ var controller = (function (bdgtCTRL, UICtrl) {
         })
     }
 
+    var updateBudget = function(){
+        //calculate the budget
 
+        // return the budget
+        
+        //display the budget on the ui
+    }
     var ctrlAddItem = function () {
         console.log('it works')
 
@@ -157,6 +163,8 @@ var controller = (function (bdgtCTRL, UICtrl) {
         //clear the fields
         UICtrl.clearFields();
         //4. calc budget
+        
+        updateBudget()
         // on git read-input
         //5. display budget on the UI
     };
