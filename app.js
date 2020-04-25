@@ -154,7 +154,8 @@ var controller = (function (bdgtCTRL, UICtrl) {
         var input, newItem;
         //1. get the field input data
         var input = UIController.getInput();
-
+        
+          if (input.description !=="" && !isNaN(input.value) && input.value>0){
         //2. add item to budget controller
         var newItem = bdgtCTRL.additem(input.type, input.description, input.value)
         //3. add new titem to UI
@@ -165,6 +166,7 @@ var controller = (function (bdgtCTRL, UICtrl) {
         //4. calc budget
         
         updateBudget()
+          }
         // on git read-input
         //5. display budget on the UI
     };
