@@ -13,6 +13,16 @@ var budgetController = (function () {
     };
 
 
+    // how line 20 and 21 works. you are saying goto data then goto allitems then goto whatever type is specifified. then go through each 
+    //element in the array 'for each' and with each element perform the function and (cur) is just a placeholder but the  function below
+    //takes the current value and adds it to sum, the current value in the array is now in (cur) and it does that for every element in the array exp or inc under all items. depending on what type will be used.
+    var calculateTotal = function (type) {
+        var sum = 0;
+        data.allItems[type].forEach(function (cur) {
+            sum = sum + cur.value;
+        })
+        data.totals[type] = sum;
+    }
 
     var data = {
         allItems: {
@@ -22,7 +32,9 @@ var budgetController = (function () {
         totals: {
             exp: 0,
             inc: 0
-        }
+        },
+        budget: 0,
+        percentage: -1
 
     };
 
@@ -56,6 +68,30 @@ var budgetController = (function () {
 
             //return new item
             return newItem
+        },
+        calculateBudget: function () {
+
+            //calculate total income and expenses
+            calculateTotal('exp');
+            calculateTotal('inc');
+            //calcualte the budget : income - expenses
+
+            data.budget = data.totals.inc - data.totals.exp
+            //calculate the percentage of income that we spent
+            if (data.totals.inc > 0) {
+                data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100)
+            } else
+                data.percentage = -1;
+        },
+
+        getBudget: function () {
+            return {
+                budget: data.budget,
+                totalInc: data.totals.inc,
+                totalExp: data.totals.exp,
+                percentage: data.percentage
+            }
+
         }
 
     };
@@ -104,19 +140,21 @@ var UIController = (function () {
             document.querySelector(element).insertAdjacentHTML('beforeend', newHTML)
 
         },
-        
-        clearFields: function(){
+
+        clearFields: function () {
             var fields, fieldsArr;
-            fields = document.querySelectorAll(DOMStrings.inputDescription + ', ' + DOMStrings.inputValue);  
-         
+            fields = document.querySelectorAll(DOMStrings.inputDescription + ', ' + DOMStrings.inputValue);
+
             fieldsArr = Array.prototype.slice.call(fields);
-            
-            fieldsArr.forEach(function (current, index, array){
+
+            fieldsArr.forEach(function (current, index, array) {
                 current.value = "";
             })
-            
+
             fieldsArr[0].focus();
         },
+
+
 
         getDomStrings: function () {
             return DOMStrings;
@@ -141,12 +179,15 @@ var controller = (function (bdgtCTRL, UICtrl) {
         })
     }
 
-    var updateBudget = function(){
+    var updateBudget = function () {
         //calculate the budget
+        bdgtCTRL.calculateBudget();
 
         // return the budget
-        
+        var budget = bdgtCTRL.getBudget();
         //display the budget on the ui
+
+        console.log(budget)
     }
     var ctrlAddItem = function () {
         console.log('it works')
@@ -154,28 +195,30 @@ var controller = (function (bdgtCTRL, UICtrl) {
         var input, newItem;
         //1. get the field input data
         var input = UIController.getInput();
-        
-          if (input.description !=="" && !isNaN(input.value) && input.value>0){
-        //2. add item to budget controller
-        var newItem = bdgtCTRL.additem(input.type, input.description, input.value)
-        //3. add new titem to UI
-        UICtrl.addListItem(newItem, input.type)
-        
-        //clear the fields
-        UICtrl.clearFields();
-        //4. calc budget
-        
-        updateBudget()
-          }
+
+        if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
+            //2. add item to budget controller
+            var newItem = bdgtCTRL.additem(input.type, input.description, input.value)
+            //3. add new titem to UI
+            UICtrl.addListItem(newItem, input.type)
+
+            //clear the fields
+            UICtrl.clearFields();
+            //4. calc budget
+
+            updateBudget()
+        }
         // on git read-input
         //5. display budget on the UI
     };
+
+
 
     return {
         init: function () {
             console.log('Application running')
             setUpEventListeners();
-           
+
         }
     }
 
