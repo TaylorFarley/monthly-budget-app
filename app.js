@@ -234,6 +234,7 @@ console.log(budget)
 
 
     return {
+        //start everthing
         init: function () {
             console.log('Application running')
             setUpEventListeners();
