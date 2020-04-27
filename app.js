@@ -55,6 +55,12 @@ var budgetController = (function () {
                 ID = 0;
             }
 
+            
+            
+            
+            
+            
+            
             //create new item if its exp or inc
             if (type === 'exp') {
                 newItem = new Expense(ID, des, val);
@@ -111,7 +117,8 @@ var UIController = (function () {
         budgetLabel: '.budget__value',
         incomeLabel: '.budget__income--value',
         expensesLabel: '.budget__expenses--value',
-        percentageLabel: '.budget__expenses--percentage'
+        percentageLabel: '.budget__expenses--percentage',
+        container: '.container'
 
     }
 
@@ -133,10 +140,10 @@ var UIController = (function () {
                 html = '<div class="item clearfix" id="income-%ID%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
             } else if (type === 'exp') {
                 element = DOMStrings.expensesContainer
-                html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+                html = '<div class="item clearfix" id="expense-%ID%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
             }
             //replace the placeholder text with some actual data
-            newHTML = html.replace('%id', obj.id)
+            newHTML = html.replace('%ID%', obj.id)
             newHTML = newHTML.replace('%description%', obj.description)
             newHTML = newHTML.replace('%value%', obj.value)
             //insert the html into the dom
@@ -159,21 +166,17 @@ var UIController = (function () {
         },
 
 
-        displayBudget: function(obj)
-        {
+        displayBudget: function (obj) {
             document.querySelector(DOMStrings.budgetLabel).textContent = obj.budget
             document.querySelector(DOMStrings.incomeLabel).textContent = obj.totalInc
             document.querySelector(DOMStrings.expensesLabel).textContent = obj.totalExp
-            
-            
-            if (obj.percentage>0)
-                {
-                    document.querySelector(DOMStrings.percentageLabel).textContent = obj.percentage + '%'
-                }
-            else
-                {
-                    document.querySelector(DOMStrings.percentageLabel).textContent = '---'
-                }
+
+
+            if (obj.percentage > 0) {
+                document.querySelector(DOMStrings.percentageLabel).textContent = obj.percentage + '%'
+            } else {
+                document.querySelector(DOMStrings.percentageLabel).textContent = '---'
+            }
         },
         getDomStrings: function () {
             return DOMStrings;
@@ -191,11 +194,12 @@ var controller = (function (bdgtCTRL, UICtrl) {
 
 
         document.addEventListener('keypress', function (e) {
-            if (e.keyCode === 1 || event.which == 13)
+            if (e.keyCode === 13 || event.which == 13)
                 ctrlAddItem();
 
-
         })
+
+        document.querySelector(DOM.container).addEventListener('click', ctrlDeleteItem)
     }
 
     var updateBudget = function () {
@@ -205,7 +209,7 @@ var controller = (function (bdgtCTRL, UICtrl) {
         // return the budget
         var budget = bdgtCTRL.getBudget();
         //display the budget on the ui
-console.log(budget)
+        console.log(budget)
         UICtrl.displayBudget(budget)
     }
     var ctrlAddItem = function () {
@@ -230,6 +234,12 @@ console.log(budget)
         // on git read-input
         //5. display budget on the UI
     };
+    
+    var ctrlDeleteItem = function(event){
+        
+        console.log(event.target.parentNode.parentNode.parentNode.parentNode.id)
+        //1. 
+    }
 
 
 
