@@ -55,12 +55,12 @@ var budgetController = (function () {
                 ID = 0;
             }
 
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
             //create new item if its exp or inc
             if (type === 'exp') {
                 newItem = new Expense(ID, des, val);
@@ -75,6 +75,28 @@ var budgetController = (function () {
             //return new item
             return newItem
         },
+
+        deleteItem: function (type, id) {
+            var ids, index;
+
+            // id = 6
+            //data.allItems[type][id];
+            // ids = [1 2 4  8]
+            //index = 3
+
+            ids = data.allItems[type].map(function (current) {
+                return current.id;
+            });
+
+            index = ids.indexOf(id);
+
+            if (index !== -1) {
+                data.allItems[type].splice(index, 1);
+            }
+
+        },
+
+
         calculateBudget: function () {
 
             //calculate total income and expenses
@@ -151,6 +173,15 @@ var UIController = (function () {
             document.querySelector(element).insertAdjacentHTML('beforeend', newHTML)
 
         },
+
+        deleteListItem: function (selectorID) {
+            var el = document.getElementById(selectorID);
+            el.parentNode.removeChild(el)
+        },
+        
+        
+     
+        
 
         clearFields: function () {
             var fields, fieldsArr;
@@ -234,28 +265,28 @@ var controller = (function (bdgtCTRL, UICtrl) {
         // on git read-input
         //5. display budget on the UI
     };
-    
-    var ctrlDeleteItem = function(event){
+
+    var ctrlDeleteItem = function (event) {
         var itemID, splitID, type, ID;
         itemID = event.target.parentNode.parentNode.parentNode.parentNode.id
         //1. 
-        if (itemID)
-            {
-              //inc-1
-                // var s = 'inc-1'
-                // s.split('-')
-                // will return inc and 1 in an array like [inc][1]
-                // so it splits up the string into elements in array
-                splitID = itemID.split('-');
-                type = splitID[0]
-                ID = splitID[1]
-                
-                //1. delete the item from data structure
-                
-                //2. delete from ui
-                
-                //3. update and show new totals/budget
-            }
+        if (itemID) {
+            //inc-1
+            // var s = 'inc-1'
+            // s.split('-')
+            // will return inc and 1 in an array like [inc][1]
+            // so it splits up the string into elements in array
+            splitID = itemID.split('-');
+            type = splitID[0]
+            ID = parseInt(splitID[1])
+
+            //1. delete the item from data structure
+            bdgtCTRL.deleteItem(type, ID)
+            //2. delete from ui
+            UICtrl.deleteListItem(itemID)
+            //3. update and show new totals/budget
+            updateBudget();
+        }
     }
 
 
