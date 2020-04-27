@@ -137,10 +137,10 @@ var UIController = (function () {
             //create hTML strings with palceholder
             if (type === 'inc') {
                 element = DOMStrings.incomeContainer
-                html = '<div class="item clearfix" id="income-%ID%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+                html = '<div class="item clearfix" id="inc-%ID%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
             } else if (type === 'exp') {
                 element = DOMStrings.expensesContainer
-                html = '<div class="item clearfix" id="expense-%ID%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+                html = '<div class="item clearfix" id="exp-%ID%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
             }
             //replace the placeholder text with some actual data
             newHTML = html.replace('%ID%', obj.id)
@@ -236,9 +236,26 @@ var controller = (function (bdgtCTRL, UICtrl) {
     };
     
     var ctrlDeleteItem = function(event){
-        
-        console.log(event.target.parentNode.parentNode.parentNode.parentNode.id)
+        var itemID, splitID, type, ID;
+        itemID = event.target.parentNode.parentNode.parentNode.parentNode.id
         //1. 
+        if (itemID)
+            {
+              //inc-1
+                // var s = 'inc-1'
+                // s.split('-')
+                // will return inc and 1 in an array like [inc][1]
+                // so it splits up the string into elements in array
+                splitID = itemID.split('-');
+                type = splitID[0]
+                ID = splitID[1]
+                
+                //1. delete the item from data structure
+                
+                //2. delete from ui
+                
+                //3. update and show new totals/budget
+            }
     }
 
 
